@@ -1,10 +1,10 @@
 # image
-FROM php:5.4-apache
+FROM php:5.6-apache
 
 # Set php.ini
 COPY ./php.ini /usr/local/etc/php/
 
-# Set apache conf (Before tag:5.4-apache)
+# Set apache conf (Before tag:5.6-apache)
 COPY ./apache2.conf /etc/apache2/
 COPY ./sites/*.conf /etc/apache2/sites-available/
 
