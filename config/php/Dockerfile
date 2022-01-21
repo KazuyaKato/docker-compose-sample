@@ -21,3 +21,5 @@ RUN apt-get update \
   && php composer-setup.php \
   && php -r "unlink('composer-setup.php');" \
   && mv composer.phar /usr/local/bin/composer
+
+ENV PATH $PATH:./vendor/phpunit/phpunit
