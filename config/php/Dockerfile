@@ -16,4 +16,8 @@ COPY ./sites/*.conf /etc/apache2/sites-available/
 # Install MySQL connection module
 RUN apt-get update \
   && apt-get install -y libpq-dev \
-  && docker-php-ext-install pdo_mysql pdo_pgsql mysqli mbstring
+  && docker-php-ext-install pdo_mysql pdo_pgsql mysqli mbstring \
+  && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+  && php composer-setup.php \
+  && php -r "unlink('composer-setup.php');" \
+  && mv composer.phar /usr/local/bin/composer
