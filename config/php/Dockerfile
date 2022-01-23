@@ -2,11 +2,13 @@
 FROM php:5.6-apache
 
 # Set php.ini
-COPY ./php.ini /usr/local/etc/php/
+COPY ./config/php/php.ini /usr/local/etc/php/
 
 # Set apache conf (Before tag:5.6-apache)
-COPY ./apache2.conf /etc/apache2/
-COPY ./sites/*.conf /etc/apache2/sites-available/
+COPY ./config/php/apache2.conf /etc/apache2/
+COPY ./config/php/sites/*.conf /etc/apache2/sites-available/
+
+COPY ./html/composer.json /var/www/html
 
 # Set apache conf (After tag:5.5-apache)
 # ENV APACHE_DOCUMENT_ROOT /var/www/html/test
@@ -21,5 +23,10 @@ RUN apt-get update \
   && php composer-setup.php \
   && php -r "unlink('composer-setup.php');" \
   && mv composer.phar /usr/local/bin/composer
+
+RUN apt-get install -y zip unzip
+
+RUN cd /var/www/html \
+  && composer install
 
 ENV PATH $PATH:./vendor/phpunit/phpunit

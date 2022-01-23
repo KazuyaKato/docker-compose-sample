@@ -5,11 +5,16 @@ services:
   # PHP Apache
   php-apache:
     container_name: "php-apache"
-    build: ./config/php
+    build:
+      # keep current dicectry 現在のディレクトリを保持
+      context: .
+      # root of exec dockerfile 実行するDockerfileのルート
+      dockerfile: ./config/php/Dockerfile
     ports:
       - 8080:80
     volumes:
       - ./html:/var/www/html
+      - /var/www/html/vendor  # 永続化
     restart: always
     depends_on:
       - mysql
